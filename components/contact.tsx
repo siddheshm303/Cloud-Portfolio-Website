@@ -27,24 +27,44 @@ export default function Contact() {
     setIsSubmitting(true)
     setSubmitStatus("idle")
 
-    // Simulate form submission
+    const form = e.currentTarget
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      setSubmitStatus("success")
-      setFormState({ name: "", email: "", message: "" })
-      setTimeout(() => setSubmitStatus("idle"), 3000)
+      const formData = new FormData(form)
+      formData.append("access_key", "2311e64c-3df0-444e-a45e-d26f9f8ed0e7")
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setSubmitStatus("success")
+        setFormState({ name: "", email: "", message: "" })
+        // Reset the form if it still exists
+        if (form) {
+          form.reset()
+        }
+        setTimeout(() => setSubmitStatus("idle"), 5000)
+      } else {
+        setSubmitStatus("error")
+        setTimeout(() => setSubmitStatus("idle"), 5000)
+      }
     } catch (error) {
+      console.error("Form submission error:", error)
       setSubmitStatus("error")
-      setTimeout(() => setSubmitStatus("idle"), 3000)
+      setTimeout(() => setSubmitStatus("idle"), 5000)
     } finally {
       setIsSubmitting(false)
     }
   }
 
   const contactInfo = [
-    { icon: Mail, label: "Email", value: "siddhesh@example.com", href: "mailto:siddhesh@example.com" },
-    { icon: Phone, label: "Phone", value: "+91 (XXX) XXX-XXXX", href: "tel:+91XXXXXXXXXX" },
-    { icon: MapPin, label: "Location", value: "India", href: "#" },
+    { icon: Mail, label: "Email", value: "siddheshm303@gmail.com", href: "mailto:siddheshm303@gmail.com" },
+    { icon: Phone, label: "Phone", value: "+91 9372974421", href: "tel:+919372974421" },
+    { icon: MapPin, label: "Location", value: "Mumbai, India", href: "#" },
   ]
 
   const socialLinks = [
