@@ -4,8 +4,14 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const geist = Geist({ subsets: ["latin"] })
-const geistMono = Geist_Mono({ subsets: ["latin"] })
+const geist = Geist({ 
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+const geistMono = Geist_Mono({ 
+  subsets: ["latin"],
+  variable: "--font-mono",
+})
 
 export const metadata: Metadata = {
   title: "Siddhesh Mulik - Cloud & DevOps Engineer",
@@ -34,11 +40,11 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale: 5,
     userScalable: true,
-    themeColor: [
-      { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-      { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
-    ],
   },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
 }
 
 export default function RootLayout({
@@ -48,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geist.className} ${geistMono.variable} antialiased`}>
+      <body className={`${geist.variable} ${geistMono.variable} ${geist.className} antialiased`}>
         {children}
         <Analytics />
       </body>
